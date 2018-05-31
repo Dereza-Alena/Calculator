@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009"
+                       xmlns:s="library://ns.adobe.com/flex/spark"
+                       xmlns:mx="library://ns.adobe.com/flex/mx">
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+import flash.events.MouseEvent;
+	
+
+	private var enterNumber:CalculateAll = new CalculateAll(); // для ввода с клавиатуры
+	public var buttonNumber:CalculateAll = new CalculateAll(); // для ввода с визуальных кнопок
+	private var smthing:MyNewClass = new MyNewClass();
+	
+	
+				
+		public function onButtonC(event:MouseEvent):String // при нажати кнопки С чистка значений элементов массива
+		{
+			trace("var arrayCurrent of buttonNumber obj before= " + buttonNumber.arrayCurrent);
+			trace("var arrayMemory of buttonNumber obj before= " + buttonNumber.arrayMemory);
+			trace("var arrayCurrent of enterNumber obj before= " + enterNumber.arrayCurrent);
+			trace("var arrayMemory of enterNumber obj before= " + enterNumber.arrayMemory);
+			
+			if (buttonNumber.arrayCurrent.length > buttonNumber.arrayMemory.length)
+			{
+				var n:int = buttonNumber.arrayCurrent.length;
+			}
+			else 
+			{
+				 n = buttonNumber.arrayMemory.length;
+			}
+			for (var i:int = 0; i < n; i++) 
+			{
+				delete buttonNumber.arrayCurrent[i];
+				delete buttonNumber.arrayMemory[i];
+			}
+			//выбрать максимальное значение для полноценной очистки памяти сделать надо
+			for (var j:int = 0; j < enterNumber.arrayCurrent.length; j++) 
+			{
+				delete enterNumber.arrayCurrent[j];
+				delete enterNumber.arrayMemory[j];
+			}
+			trace("var arrayCurrent of buttonNumber obj = " + buttonNumber.arrayCurrent);
+			trace("var arrayMemory of buttonNumber obj = " + buttonNumber.arrayMemory);
+			trace("var arrayCurrent of enterNumber obj = " + enterNumber.arrayCurrent);
+			trace("var arrayMemory of enterNumber obj = " + enterNumber.arrayMemory);
+		return result.text  =  " ";
+		}
+		
+		public function onButtonResult(event:MouseEvent):String
+		{
+			
+			if (buttonNumber.arrayMemory[0] == "+") 
+			{
+				if (buttonNumber.arrayCurrent.length > buttonNumber.arrayMemory.length)
+				{
+					var n:int = buttonNumber.arrayCurrent.length;
+				}
+				else 
+				{
+					n = buttonNumber.arrayMemory.length;
+				}
+				buttonNumber.arrayMemory.shift();
+				for (var i:int = 0; i < n; i++) 
+				{
+					if ((buttonNumber.arrayMemory[i] + buttonNumber.arrayCurrent[i])>=10) 
+					{
+						buttonNumber.resultArray[i]+=((buttonNumber.arrayMemory[i] + buttonNumber.arrayCurrent[i])-10);
+						buttonNumber.resultArray[i + 1] += 1;
+						trace("buttonNumber.resultArray[i]=" + buttonNumber.resultArray[i]);
+						trace("buttonNumber.resultArray[i+1]=" + buttonNumber.resultArray[i+1]);	
+					}
+					else buttonNumber.resultArray[i]=(buttonNumber.arrayMemory[i] + buttonNumber.arrayCurrent[i]);	
+						
+				}
+				trace ("buttonNumber.resultArray" + buttonNumber.resultArray);
+			}
+			return result.text  = buttonNumber.resultArray.toString(); 
+		}
+		public function onButtonPlus(event:MouseEvent):String // при нажати кнопки + сохраняется текущее значение, потом обнуляется current
+		{
+			trace("var arrayMemory of buttonNumber obj before =" + buttonNumber.arrayMemory);
+			trace("var arrayMemory of enterNumber obj before =" + enterNumber.arrayMemory);
+			for (var i:int = 0; i < buttonNumber.arrayCurrent.length; i++) 
+			{
+				buttonNumber.arrayMemory[i] = buttonNumber.arrayCurrent[i];
+				delete buttonNumber.arrayCurrent[i];
+			}
+			for (var j:int = 0; j < enterNumber.arrayCurrent.length; j++) 
+			{
+				enterNumber.arrayMemory[j] = enterNumber.arrayCurrent[j];
+				delete enterNumber.arrayCurrent[j];
+			}
+			buttonNumber.arrayMemory.unshift("+");
+			enterNumber.arrayMemory.unshift("+");
+			trace(buttonNumber.arrayCurrent);
+			trace("var arrayMemory of buttonNumber obj =  " + buttonNumber.arrayMemory);
+			trace(enterNumber.arrayCurrent);
+			trace("var arrayMemory of enterNumber obj = " + enterNumber.arrayMemory);
+			
+			/*function doSumArray(arrayCurrent:Array, arrayMemory:Array):Array
+		{
+			if (this.arrayCurrent.length > this.arrayMemory.length) 
+			{
+			for (var i:int = 0; i < this.arrayCurrent.length; i++) 
+			{
+				for ( var j:int = 0; j < this.arrayMemory.length; j++) 
+				{
+					this.resultArray = this.arrayCurrent[i] + this.arrayMemory[j];
+				}
+			}	
+			}
+			else 
+			for (i = 0; i < arrayMemory.length; i++) 
+			{
+				for ( j = 0; j < arrayCurrent.length; j++) 
+				{
+					this.resultArray = this.arrayMemory[i] +this.arrayCurrent[j];
+				}
+			}
+			return this.resultArray;
+		}*/
+		return result.text  =  " ";
+		}
+		public function onButtonMinus(event:MouseEvent):String // при нажати кнопки - сохраняется текущее значение, потом обнуляется current
+		{
+			trace("var arrayMemory of buttonNumber obj before =" + buttonNumber.arrayMemory);
+			trace("var arrayMemory of enterNumber obj before =" + enterNumber.arrayMemory);
+			for (var i:int = 0; i < buttonNumber.arrayCurrent.length; i++) 
+			{
+				buttonNumber.arrayMemory[i] = buttonNumber.arrayCurrent[i];
+				delete buttonNumber.arrayCurrent[i];
+			}
+			for (var j:int = 0; j < enterNumber.arrayCurrent.length; j++) 
+			{
+				enterNumber.arrayMemory[j] = enterNumber.arrayCurrent[j];
+				delete enterNumber.arrayCurrent[j];
+			}
+			buttonNumber.arrayMemory.unshift("-");
+			enterNumber.arrayMemory.unshift("-");
+			trace(buttonNumber.arrayCurrent);
+			trace("var arrayMemory of buttonNumber obj ** =  " + buttonNumber.arrayMemory);
+			trace(enterNumber.arrayCurrent);
+			trace("var arrayMemory of enterNumber obj ** = " + enterNumber.arrayMemory);
+			return result.text  =  "-";
+			
+		}
+		public function onButtonZero(event:MouseEvent):String
+		{
+			buttonNumber.arrayCurrent.unshift (0); 
+			enterNumber.arrayCurrent.unshift (0);
+			return result.text += "0";
+		}
+		public function onButtonOne(event:MouseEvent):String
+		{
+			buttonNumber.arrayCurrent.unshift (1); 
+			enterNumber.arrayCurrent.unshift (1);
+			return result.text += "1";
+		}
+		public function onButtonTwo(event:MouseEvent):String
+		{
+			buttonNumber.arrayCurrent.unshift (2); 
+			enterNumber.arrayCurrent.unshift (2);
+			return result.text += "2";
+		}
+		public function onButtonThree(event:MouseEvent):String
+		{
+			buttonNumber.arrayCurrent.unshift (3); 
+			enterNumber.arrayCurrent.unshift (3);
+			return result.text += "3";
+		}
+		public function onButtonFour(event:MouseEvent):String
+		{
+			buttonNumber.arrayCurrent.unshift (4); 
+			enterNumber.arrayCurrent.unshift (4);
+			return result.text += "4";
+		}
+		public function onButtonFive(event:MouseEvent):String
+		{
+			buttonNumber.arrayCurrent.unshift (5); 
+			enterNumber.arrayCurrent.unshift (5);
+			return result.text += "5";
+		}
+		public function onButtonSix(event:MouseEvent):String
+		{
+			buttonNumber.arrayCurrent.unshift (6); 
+			enterNumber.arrayCurrent.unshift (6)
+			return result.text += "6";
+		}
+		
+		public function onButtonSeven(event:MouseEvent):String
+		{
+			buttonNumber.arrayCurrent.unshift (7);
+			enterNumber.arrayCurrent.unshift (7)
+			return result.text += "7";
+		}
+		public function onButtonEight(event:MouseEvent):String
+		{
+			buttonNumber.arrayCurrent.unshift (8);
+			enterNumber.arrayCurrent.unshift (8)
+			return result.text += "8";
+		}
+		
+		public function onButtonNine(event:MouseEvent):String
+		{
+			buttonNumber.arrayCurrent.unshift (9);
+			enterNumber.arrayCurrent.unshift (9)
+			return result.text += "9";
+		}
+		
+		/*public function setEnter(event:flash.events.Event):void // при нажатии на окно ввода(правое)
+		{
+			//<s:TextInput x="250" y="30" id="enter" change ="setEnter(event)" /> 
+			enter.text = enterNumber.getCurrent().toString(); // над объектом enterNumber вызывается метод из его класса и преобразуется в строку
+			enter.text +=  smthing.doSomething();
+		}*/
+		
+		
+		
+		public function inEnterPlus(event:flash.events.Event):void 
+		{
+			//!!! надо разбить по символам вводимый текст и записать в массив по-элементно, потом contact оба массива
+			//enterNumber.arrayCurrent.unshift (result.text);// вводит и запоминает в массив данные ввода с клавиатуры
+			//trace(enterNumber.arrayCurrent); 
+			result.text = " ";
+			//(buttonNumber.arrayCurrent + enterNumber.arrayCurrent).toString(); //  ввода при вводе не с "моих" кнопок
+		}
+
+		]]>
+	</fx:Script>
+	
+	
+	
+	<s:Button x="0" y="30" label="C" click="onButtonC(event)" />
+	<s:Button x="80" y="30" label="+" click="onButtonPlus(event)" />
+	<s:Button x="160" y="30" label="-" click="onButtonMinus(event)" />
+	<s:Button x="240" y="30" label="=" click="onButtonResult(event)" />
+	<s:TextInput x="0" y="0" id="result" change ="inEnterPlus(event)" />
+	
+	<s:Button x="10" y="80" label="7" click="onButtonSeven(event)" />
+	<s:Button x="80" y="80" label="8" click="onButtonEight(event)" />
+	<s:Button x="150" y="80" label="9" click="onButtonNine(event)" />
+	<s:Button x="150" y="100" label="6" click="onButtonSix(event)" />
+	<s:Button x="80" y="100" label="5" click="onButtonFive(event)" />
+	<s:Button x="10" y="100" label="4" click="onButtonFour(event)" />
+	<s:Button x="150" y="120" label="3" click="onButtonThree(event)" />
+	<s:Button x="80" y="120" label="2" click="onButtonTwo(event)" />
+	<s:Button x="10" y="120" label="1" click="onButtonOne(event)" />
+	<s:Button x="10" y="140" label="0" click="onButtonZero(event)" />
+	
+	
+	
+	
+</s:WindowedApplication>
